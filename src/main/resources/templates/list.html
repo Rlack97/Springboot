@@ -18,9 +18,32 @@
                 <h4 th:text="${i.title}"  ></h4>
             </a>
             <p th:text="${i.price}"></p>
+            <a th:href="@{/edit/{id} (id=${i.id})}">수정</a>
+            <button th:onclick="'sendDeleteRequest(' + ${i.id} + ')'">삭제</button>
         </div>
     </div>
 
+
 </div>
+<script>
+    function sendDeleteRequest(id) {
+        const url = `/delete/${id}`;
+        fetch(url, {
+            method: 'DELETE'
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Deleted successfully!');
+                // 성공 시, 페이지를 새로고침하거나 삭제된 내용을 반영하도록 로직 추가 가능
+                location.reload();
+            } else {
+                alert('Failed to delete.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
 </body>
 </html>
